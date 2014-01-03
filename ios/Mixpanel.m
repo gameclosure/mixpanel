@@ -39,7 +39,6 @@
 //GC: #import "MPSurveyNavigationController.h"
 #import "Mixpanel.h"
 #import "NSData+MPBase64.h"
-#import "UIView+MPSnapshotImage.h"
 
 #define VERSION @"2.2.2"
 
