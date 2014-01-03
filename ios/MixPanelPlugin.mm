@@ -1,5 +1,5 @@
 #import "MixPanelPlugin.h"
-#import <Mixpanel/Mixpanel.h>
+#import "Mixpanel.h"
 
 @implementation MixPanelPlugin
 

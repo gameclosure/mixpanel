@@ -1,37 +1,14 @@
 {
 	"code": [
 		"MixPanelPlugin.h",
-		"MixPanelPlugin.mm",
-		"../mixpanel-iphone/Mixpanel/MPSurvey.h",
-		"../mixpanel-iphone/Mixpanel/MPSurvey.m",
-		"../mixpanel-iphone/Mixpanel/MPSurveyNavigationController.h",
-		"../mixpanel-iphone/Mixpanel/MPSurveyNavigationController.m",
-		"../mixpanel-iphone/Mixpanel/MPSurveyQuestion.h",
-		"../mixpanel-iphone/Mixpanel/MPSurveyQuestion.m",
-		"../mixpanel-iphone/Mixpanel/MPSurveyQuestionViewController.h",
-		"../mixpanel-iphone/Mixpanel/MPSurveyQuestionViewController.m",
-		"../mixpanel-iphone/Mixpanel/Mixpanel.h",
-		"../mixpanel-iphone/Mixpanel/Mixpanel.m",
-		"../mixpanel-iphone/Mixpanel/NSData+MPBase64.h",
-		"../mixpanel-iphone/Mixpanel/NSData+MPBase64.m",
-		"../mixpanel-iphone/Mixpanel/UIImage+MPAverageColor.h",
-		"../mixpanel-iphone/Mixpanel/UIImage+MPAverageColor.m",
-		"../mixpanel-iphone/Mixpanel/UIImage+MPImageEffects.h",
-		"../mixpanel-iphone/Mixpanel/UIImage+MPImageEffects.m",
-		"../mixpanel-iphone/Mixpanel/UIView+MPSnapshotImage.h",
-		"../mixpanel-iphone/Mixpanel/UIView+MPSnapshotImage.m"
+		"MixPanelPlugin.mm"
+	],
+	"arccode": [
+		"MixPanel.h",
+		"MixPanel.m",
+		"NSData+MPBase64.h",
+		"NSData+MPBase64.m"
 	],
 	"frameworks": [
-		"../mixpanel-iphone/Mixpanel/MPArrowLeft.png",
-		"../mixpanel-iphone/Mixpanel/MPArrowLeft@2x.png",
-		"../mixpanel-iphone/Mixpanel/MPArrowRight.png",
-		"../mixpanel-iphone/Mixpanel/MPArrowRight@2x.png",
-		"../mixpanel-iphone/Mixpanel/MPCheckmark.png",
-		"../mixpanel-iphone/Mixpanel/MPCheckmark@2x.png",
-		"../mixpanel-iphone/Mixpanel/MPDismissKeyboard.png",
-		"../mixpanel-iphone/Mixpanel/MPDismissKeyboard@2x.png",
-		"../mixpanel-iphone/Mixpanel/MPLogo.png",
-		"../mixpanel-iphone/Mixpanel/MPLogo@2x.png",
-		"../mixpanel-iphone/Mixpanel/MPSurvey.storyboard"
 	]
 }
