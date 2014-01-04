@@ -22,8 +22,6 @@
 //GC: #import "MPSurvey.h"
 //GC: Strip IFA support
 #define MIXPANEL_NO_IFA
-#define MIXPANEL_DEBUG
-#define MIXPANEL_LOG
 
 @class    MixpanelPeople;
 @protocol MixpanelDelegate;
