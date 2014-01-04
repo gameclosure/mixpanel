@@ -1,6 +1,6 @@
-# Game Closure DevKit Plugin: MixPanel
+# Game Closure DevKit Plugin: Mixpanel
 
-This plugin adds advertising support from the [MixPanel service](http://mixpanel.com) for Android and iOS platforms.
+This plugin adds advertising support from the [Mixpanel service](http://mixpanel.com) for Android and iOS platforms.
 
 ## Usage
 
@@ -14,7 +14,7 @@ Include it in the `manifest.json` file under the "addons" section for your game:
 ],
 ~~~
 
-Under the Android/iOS sections, you can configure the MixPanel plugin:
+Under the Android/iOS sections, you can configure the Mixpanel plugin:
 
 ~~~
 	"android": {
@@ -25,7 +25,7 @@ Under the Android/iOS sections, you can configure the MixPanel plugin:
 			"72": "resources/icons/android72.png",
 			"96": "resources/icons/android96.png"
 		},
-		"mixPanelToken": "YOUR_TOKEN"
+		"mixpanelToken": "YOUR_TOKEN"
 	},
 ~~~
 
@@ -40,11 +40,11 @@ Under the Android/iOS sections, you can configure the MixPanel plugin:
 			"114": "resources/images/promo/icon114.png",
 			"144": "resources/images/promo/icon144.png"
 		},
-		"mixPanelToken": "YOUR_TOKEN"
+		"mixpanelToken": "YOUR_TOKEN"
 	},
 ~~~
 
 Note that the key names are case-sensitive.
 
-You can test for successful integration on the [MixPanel website](http://mixpanel.com).
+You can test for successful integration on the [Mixpanel website](http://mixpanel.com).
 
