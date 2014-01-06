@@ -5,7 +5,7 @@
     "libraries": [
     ],
     "jars": [
-		"mixpaneldebug.jar"
+		"mixpanelrelease.jar"
     ],
     "injectionXML": "manifest.xml",
 	"injectionXSL": "manifest.xsl"
