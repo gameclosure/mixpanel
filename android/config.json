@@ -1,0 +1,12 @@
+{
+    "copyFiles": [
+        "MixPanelPlugin.java"
+    ],
+    "libraries": [
+    ],
+    "jars": [
+		"mixpaneldebug.jar"
+    ],
+    "injectionXML": "manifest.xml",
+	"injectionXSL": "manifest.xsl"
+}

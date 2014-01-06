@@ -1,0 +1,6 @@
+<!--START_PLUGINS_MANIFEST-->
+<!--END_PLUGINS_MANIFEST-->
+<!--START_PLUGINS_APPLICATION-->
+	<!--Mixpanel-->
+	<meta-data android:name="MIXPANEL_TOKEN" android:value="" />
+<!--END_PLUGINS_APPLICATION-->
