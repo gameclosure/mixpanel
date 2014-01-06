@@ -25,7 +25,7 @@ import java.util.HashMap;
 import java.util.Map;
 import java.util.Iterator;
 
-import com.flurry.android.FlurryAgent;
+import com.mixpanel.android.mpmetrics.MixpanelAPI;
 
 
 public class MixPanelPlugin implements IPlugin {
