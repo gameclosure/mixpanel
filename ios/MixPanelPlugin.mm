@@ -1,5 +1,6 @@
 #import "MixPanelPlugin.h"
 #import "Mixpanel.h"
+#import "platform/log.h"
 
 @implementation MixPanelPlugin
 
@@ -25,10 +26,10 @@
 
 		[Mixpanel sharedInstanceWithToken:token];
 
-		NSLog(@"{mixpanel} Initialized with manifest mixpanelToken: '%@'", token);
+		NSLOG(@"{mixpanel} Initialized with manifest mixpanelToken: '%@'", token);
 	}
 	@catch (NSException *exception) {
-		NSLog(@"{mixpanel} Failure to get ios:mixpanelToken from manifest file: %@", exception);
+		NSLOG(@"{mixpanel} Failure to get ios:mixpanelToken from manifest file: %@", exception);
 	}
 }
 

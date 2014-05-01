@@ -36,6 +36,8 @@
 //GC: Add missing header
 #import <dispatch/queue.h>
 
+#import "platform/log.h"
+
 //GC: #import "MPSurveyNavigationController.h"
 #import "Mixpanel.h"
 #import "NSData+MPBase64.h"
@@ -43,13 +45,13 @@
 #define VERSION @"2.2.2"
 
 #ifdef MIXPANEL_LOG
-#define MixpanelLog(...) NSLog(__VA_ARGS__)
+#define MixpanelLog(...) NSLOG(__VA_ARGS__)
 #else
 #define MixpanelLog(...)
 #endif
 
 #ifdef MIXPANEL_DEBUG
-#define MixpanelDebug(...) NSLog(__VA_ARGS__)
+#define MixpanelDebug(...) NSLOG(__VA_ARGS__)
 #else
 #define MixpanelDebug(...)
 #endif
@@ -107,7 +109,7 @@ static void MixpanelReachabilityCallback(SCNetworkReachabilityRef target, SCNetw
             [mixpanel reachabilityChanged:flags];
         }
     } else {
-        NSLog(@"Mixpanel reachability callback received unexpected info object");
+        NSLOG(@"Mixpanel reachability callback received unexpected info object");
     }
 }
 
@@ -125,7 +127,7 @@ static Mixpanel *sharedInstance = nil;
 + (Mixpanel *)sharedInstance
 {
     if (sharedInstance == nil) {
-        NSLog(@"%@ warning sharedInstance called before sharedInstanceWithToken:", self);
+        NSLOG(@"%@ warning sharedInstance called before sharedInstanceWithToken:", self);
     }
     return sharedInstance;
 }
@@ -136,7 +138,7 @@ static Mixpanel *sharedInstance = nil;
         apiToken = @"";
     }
     if ([apiToken length] == 0) {
-        NSLog(@"%@ warning empty api token", self);
+        NSLOG(@"%@ warning empty api token", self);
     }
     if (self = [self init]) {
         self.people = [[MixpanelPeople alloc] initWithMixpanel:self];
@@ -178,7 +180,7 @@ static Mixpanel *sharedInstance = nil;
             }
         }
         if (!reachabilityOk) {
-            NSLog(@"%@ failed to set up reachability callback: %s", self, SCErrorString(SCError()));
+            NSLOG(@"%@ failed to set up reachability callback: %s", self, SCErrorString(SCError()));
         }
 
         NSNotificationCenter *notificationCenter = [NSNotificationCenter defaultCenter];
@@ -308,10 +310,10 @@ static Mixpanel *sharedInstance = nil;
         data = [NSJSONSerialization dataWithJSONObject:coercedObj options:0 error:&error];
     }
     @catch (NSException *exception) {
-        NSLog(@"%@ exception encoding api data: %@", self, exception);
+        NSLOG(@"%@ exception encoding api data: %@", self, exception);
     }
     if (error) {
-        NSLog(@"%@ error encoding api data: %@", self, error);
+        NSLOG(@"%@ error encoding api data: %@", self, error);
     }
     return data;
 }
@@ -338,7 +340,7 @@ static Mixpanel *sharedInstance = nil;
             NSString *stringKey;
             if (![key isKindOfClass:[NSString class]]) {
                 stringKey = [key description];
-                NSLog(@"%@ warning: property keys should be strings. got: %@. coercing to: %@", self, [key class], stringKey);
+                NSLOG(@"%@ warning: property keys should be strings. got: %@. coercing to: %@", self, [key class], stringKey);
             } else {
                 stringKey = [NSString stringWithString:key];
             }
@@ -355,7 +357,7 @@ static Mixpanel *sharedInstance = nil;
     }
     // default to sending the object's description
     NSString *s = [obj description];
-    NSLog(@"%@ warning: property values should be valid json types. got: %@. coercing to: %@", self, [obj class], s);
+    NSLOG(@"%@ warning: property values should be valid json types. got: %@. coercing to: %@", self, [obj class], s);
     return s;
 }
 
@@ -409,11 +411,11 @@ static Mixpanel *sharedInstance = nil;
 #endif
 
     if (!distinctId) {
-        NSLog(@"%@ error getting device identifier: falling back to uuid", self);
+        NSLOG(@"%@ error getting device identifier: falling back to uuid", self);
         distinctId = [[NSUUID UUID] UUIDString];
     }
     if (!distinctId) {
-        NSLog(@"%@ error getting uuid: no default distinct id could be generated", self);
+        NSLOG(@"%@ error getting uuid: no default distinct id could be generated", self);
     }
     return distinctId;
 }
@@ -422,7 +424,7 @@ static Mixpanel *sharedInstance = nil;
 - (void)identify:(NSString *)distinctId
 {
     if (distinctId == nil || distinctId.length == 0) {
-        NSLog(@"%@ error blank distinct id: %@", self, distinctId);
+        NSLOG(@"%@ error blank distinct id: %@", self, distinctId);
         return;
     }
     dispatch_async(self.serialQueue, ^{
@@ -445,11 +447,11 @@ static Mixpanel *sharedInstance = nil;
 - (void)createAlias:(NSString *)alias forDistinctID:(NSString *)distinctID
 {
     if (!alias || [alias length] == 0) {
-        NSLog(@"%@ create alias called with empty alias: %@", self, alias);
+        NSLOG(@"%@ create alias called with empty alias: %@", self, alias);
         return;
     }
     if (!distinctID || [distinctID length] == 0) {
-        NSLog(@"%@ create alias called with empty distinct id: %@", self, distinctID);
+        NSLOG(@"%@ create alias called with empty distinct id: %@", self, distinctID);
         return;
     }
     [self track:@"$create_alias" properties:@{@"distinct_id": distinctID, @"alias": alias}];
@@ -463,7 +465,7 @@ static Mixpanel *sharedInstance = nil;
 - (void)track:(NSString *)event properties:(NSDictionary *)properties
 {
     if (event == nil || [event length] == 0) {
-        NSLog(@"%@ mixpanel track called with empty event parameter. using 'mp_event'", self);
+        NSLOG(@"%@ mixpanel track called with empty event parameter. using 'mp_event'", self);
         event = @"mp_event";
     }
     properties = [properties copy];
@@ -688,13 +690,13 @@ static Mixpanel *sharedInstance = nil;
         [self updateNetworkActivityIndicator:NO];
 
         if (error) {
-            NSLog(@"%@ network failure: %@", self, error);
+            NSLOG(@"%@ network failure: %@", self, error);
             break;
         }
 
         NSString *response = [[NSString alloc] initWithData:responseData encoding:NSUTF8StringEncoding];
         if ([response intValue] == 0) {
-            NSLog(@"%@ %@ api rejected some items", self, endpoint);
+            NSLOG(@"%@ %@ api rejected some items", self, endpoint);
         };
 
         [queue removeObjectsInArray:batch];
@@ -772,7 +774,7 @@ static Mixpanel *sharedInstance = nil;
     NSString *filePath = [self eventsFilePath];
     MixpanelDebug(@"%@ archiving events data to %@: %@", self, filePath, self.eventsQueue);
     if (![NSKeyedArchiver archiveRootObject:self.eventsQueue toFile:filePath]) {
-        NSLog(@"%@ unable to archive events data", self);
+        NSLOG(@"%@ unable to archive events data", self);
     }
 }
 
@@ -781,7 +783,7 @@ static Mixpanel *sharedInstance = nil;
     NSString *filePath = [self peopleFilePath];
     MixpanelDebug(@"%@ archiving people data to %@: %@", self, filePath, self.peopleQueue);
     if (![NSKeyedArchiver archiveRootObject:self.peopleQueue toFile:filePath]) {
-        NSLog(@"%@ unable to archive people data", self);
+        NSLOG(@"%@ unable to archive people data", self);
     }
 }
 
@@ -797,7 +799,7 @@ static Mixpanel *sharedInstance = nil;
     [p setValue:self.shownSurveyCollections forKey:@"shownSurveyCollections"];
     MixpanelDebug(@"%@ archiving properties data to %@: %@", self, filePath, p);
     if (![NSKeyedArchiver archiveRootObject:p toFile:filePath]) {
-        NSLog(@"%@ unable to archive properties data", self);
+        NSLOG(@"%@ unable to archive properties data", self);
     }
 }
 
@@ -816,7 +818,7 @@ static Mixpanel *sharedInstance = nil;
         MixpanelDebug(@"%@ unarchived events data: %@", self, self.eventsQueue);
     }
     @catch (NSException *exception) {
-        NSLog(@"%@ unable to unarchive events data, starting fresh", self);
+        NSLOG(@"%@ unable to unarchive events data, starting fresh", self);
         [[NSFileManager defaultManager] removeItemAtPath:filePath error:nil];
         self.eventsQueue = nil;
     }
@@ -833,7 +835,7 @@ static Mixpanel *sharedInstance = nil;
         MixpanelDebug(@"%@ unarchived people data: %@", self, self.peopleQueue);
     }
     @catch (NSException *exception) {
-        NSLog(@"%@ unable to unarchive people data, starting fresh", self);
+        NSLOG(@"%@ unable to unarchive people data, starting fresh", self);
         [[NSFileManager defaultManager] removeItemAtPath:filePath error:nil];
         self.peopleQueue = nil;
     }
@@ -851,7 +853,7 @@ static Mixpanel *sharedInstance = nil;
         MixpanelDebug(@"%@ unarchived properties data: %@", self, properties);
     }
     @catch (NSException *exception) {
-        NSLog(@"%@ unable to unarchive properties data, starting fresh", self);
+        NSLOG(@"%@ unable to unarchive properties data, starting fresh", self);
         [[NSFileManager defaultManager] removeItemAtPath:filePath error:nil];
     }
     if (properties) {
@@ -962,12 +964,12 @@ static Mixpanel *sharedInstance = nil;
             NSError *error = nil;
             NSData *data = [NSURLConnection sendSynchronousRequest:request returningResponse:nil error:&error];
             if (error) {
-                NSLog(@"%@ survey check http error: %@", self, error);
+                NSLOG(@"%@ survey check http error: %@", self, error);
                 return;
             }
             NSDictionary *object = [NSJSONSerialization JSONObjectWithData:data options:0 error:&error];
             if (error) {
-                NSLog(@"%@ survey check json error: %@", self, error);
+                NSLOG(@"%@ survey check json error: %@", self, error);
                 return;
             }
             if (object[@"error"]) {
@@ -1046,7 +1048,7 @@ static Mixpanel *sharedInstance = nil;
             }
         });
     } else {
-        NSLog(@"%@ cannot show nil survey", self);
+        NSLOG(@"%@ cannot show nil survey", self);
     }
 }
 
