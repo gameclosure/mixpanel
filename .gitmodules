@@ -1,6 +1,6 @@
 [submodule "mixpanel-iphone"]
 	path = mixpanel-iphone
-	url = git@github.com:mixpanel/mixpanel-iphone.git
+	url = https://github.com/mixpanel/mixpanel-iphone
 [submodule "mixpanel-android"]
 	path = mixpanel-android
-	url = git@github.com:mixpanel/mixpanel-android.git
+	url = https://github.com/mixpanel/mixpanel-android
