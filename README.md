@@ -1,50 +1,97 @@
 # Game Closure DevKit Plugin: Mixpanel
 
-This plugin adds advertising support from the [Mixpanel service](http://mixpanel.com) for Android and iOS platforms.
+This plugin adds analytics support for the
+[Mixpanel service](http://mixpanel.com) for Android and iOS platforms.
+
+## Installation
+Install the module using the standard devkit install process:
+
+~~~
+devkit install https://github.com/gameclosure/mixpanel#v2.0.0
+~~~
+
+## Setup
+
+Create a new app in the Mixpanel dashboard and add your app token to your
+`manifest.json` file under the `ios` or `android` section as necessary.
+
+~~~
+    "android": {
+        "mixpanelToken": "YOUR_TOKEN"
+    },
+~~~
+
+~~~
+    "ios": {
+        "mixpanelToken": "YOUR_TOKEN"
+    },
+~~~
 
 ## Usage
 
-Install the addon with `basil install mixpanel`.
-
-Include it in the `manifest.json` file under the "addons" section for your game:
+To use Mixpanel in your game, import the mixpanel object:
 
 ~~~
-"addons": [
-	"mixpanel"
-],
+import mixpanel;
 ~~~
 
-Under the Android/iOS sections, you can configure the Mixpanel plugin:
+Then send individual track events like this:
 
 ~~~
-	"android": {
-		"versionCode": 1,
-		"icons": {
-			"36": "resources/icons/android36.png",
-			"48": "resources/icons/android48.png",
-			"72": "resources/icons/android72.png",
-			"96": "resources/icons/android96.png"
-		},
-		"mixpanelToken": "YOUR_TOKEN"
-	},
+mixpanel.track("myEvent", {
+    "score": 999,
+    "coins": 11,
+    "isRandomParameter": true
+});
 ~~~
 
+If you assign unique ids to your users you can send that on to mixpanel
+so it can keep track of users in the same way you are with the `setUserId`
+(or `setIdentity`) function.
+
 ~~~
-	"ios": {
-		"bundleID": "mmp",
-		"appleID": "568975017",
-		"version": "1.0.3",
-		"icons": {
-			"57": "resources/images/promo/icon57.png",
-			"72": "resources/images/promo/icon72.png",
-			"114": "resources/images/promo/icon114.png",
-			"144": "resources/images/promo/icon144.png"
-		},
-		"mixpanelToken": "YOUR_TOKEN"
-	},
+mixpanel.setUserId(userId);
 ~~~
 
-Note that the key names are case-sensitive.
+Mixpanel also supports tracking global properties for a user across all
+of their events (called [super
+properties](https://mixpanel.com/help/reference/javascript#super-properties)
+on mixpanel). You can set these using the `setGlobalProperty` function.
+
+~~~
+mixpanel.setGlobalProperty(propertyName, propertyValue);
+~~~
+
+
+## Testing
+
+To test for successful integration, build your game:
+
+~~~
+devkit debug native-android --clean --open
+~~~
+
+Then watch logcat:
+
+~~~
+adb logcat | grep mixpanel
+~~~
+
+If Mixpanel is hooked up properly, you'll see something like this:
+
+~~~
+D/JS      (30374): 5 Dec 13:01:47 LOG console LOG mixpanel track:  testevent {"event_data1":1,"event_data2":"yay"}
+E/JS      (30374): {mixpanel} track - success: testevent
+~~~
 
 You can test for successful integration on the [Mixpanel website](http://mixpanel.com).
 
+## Platform-specific notes
+
+### Browsers
+
+Nothing actually gets sent to Mixpanel in browsers, but you'll still see logs that look like this:
+
+~~~
+LOG mixpanel track:  testevent {"event_data1":1,"event_data2":"yay"} 
+~~~
