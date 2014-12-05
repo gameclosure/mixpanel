@@ -17,6 +17,10 @@ var MixPanel = Class(function () {
 
 	this.setUserId =
 	this.setIdentity = function (value) {
+		if (DEBUG) {
+			logger.log("setIdentity: ", value);
+		}
+
 		if (hasNativeEvents) {
 			NATIVE.plugins.sendEvent("MixPanelPlugin", "setIdentity", JSON.stringify({
 					value: value
@@ -25,6 +29,10 @@ var MixPanel = Class(function () {
 	}
 
 	this.setGlobalProperty = function (name, value) {
+		if (DEBUG) {
+			logger.log("setGlobalProperty: ", name, value);
+		}
+
 		if (hasNativeEvents) {
 			NATIVE.plugins.sendEvent("MixPanelPlugin", "setGlobalProperty", JSON.stringify({
 					name: name,
