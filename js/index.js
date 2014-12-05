@@ -1,6 +1,7 @@
 var hasNativeEvents = NATIVE && NATIVE.plugins && NATIVE.plugins.sendEvent;
 
 var MixPanel = Class(function () {
+	this.trackEvent =
 	this.track = function (name, data) {
 		if (DEBUG) {
 			logger.log("track: ", name, JSON.stringify(data));
@@ -14,6 +15,7 @@ var MixPanel = Class(function () {
 		}
 	};
 
+	this.setUserId =
 	this.setIdentity = function (value) {
 		if (hasNativeEvents) {
 			NATIVE.plugins.sendEvent("MixPanelPlugin", "setIdentity", JSON.stringify({
