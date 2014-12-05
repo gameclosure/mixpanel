@@ -30,25 +30,20 @@ import com.mixpanel.android.mpmetrics.MixpanelAPI;
 
 public class MixPanelPlugin implements IPlugin {
     Activity activity;
-	Context context;
-	MixpanelAPI mixpanel;
+    Context context;
+    MixpanelAPI mixpanel;
 
-    public MixPanelPlugin() {
-
-    }
+    public MixPanelPlugin() { }
 
     public void onCreateApplication(Context applicationContext) {
-		this.context = applicationContext;
+        this.context = applicationContext;
     }
 
     public void onCreate(Activity activity, Bundle savedInstanceState) {
         this.activity = activity;
-
     }
 
-    public void onResume() {
-
-    }
+    public void onResume() { }
 
     public void onStart() {
         PackageManager manager = activity.getPackageManager();
@@ -62,7 +57,7 @@ public class MixPanelPlugin implements IPlugin {
             android.util.Log.d("EXCEPTION", "" + e.getMessage());
         }
 
-		this.mixpanel = MixpanelAPI.getInstance(context, token);
+    this.mixpanel = MixpanelAPI.getInstance(context, token);
     }
 
     public void setIdentity(String json) {
@@ -70,7 +65,7 @@ public class MixPanelPlugin implements IPlugin {
             JSONObject obj = new JSONObject(json);
             String value = obj.getString("value");
 
-			mixpanel.identify(value);
+      mixpanel.identify(value);
         } catch (JSONException e) {
             android.util.Log.d("EXCEPTION", "" + e.getMessage());
         }
@@ -82,10 +77,10 @@ public class MixPanelPlugin implements IPlugin {
             String key = obj.getString("key");
             String value = obj.getString("value");
 
-			JSONObject props = new JSONObject();
-			props.put(key, value);
+            JSONObject props = new JSONObject();
+            props.put(key, value);
 
-			mixpanel.registerSuperProperties(props);
+            mixpanel.registerSuperProperties(props);
         } catch (JSONException e) {
             android.util.Log.d("EXCEPTION", "" + e.getMessage());
         }
@@ -94,7 +89,7 @@ public class MixPanelPlugin implements IPlugin {
     public void track(String json) {
         String eventName = "noName";
         try {
-			JSONObject props = new JSONObject();
+            JSONObject props = new JSONObject();
 
             JSONObject obj = new JSONObject(json);
             eventName = obj.getString("eventName");
@@ -110,11 +105,11 @@ public class MixPanelPlugin implements IPlugin {
                 }
 
                 if (value != null) {
-					props.put(key, value);
+                  props.put(key, value);
                 }
             }
 
-			mixpanel.track(eventName, props);
+            mixpanel.track(eventName, props);
             logger.log("{mixpanel} track - success: " + eventName);
         } catch (JSONException e) {
             logger.log("{mixpanel} track - failure: " + eventName + " - " + e.getMessage());
@@ -129,7 +124,7 @@ public class MixPanelPlugin implements IPlugin {
     }
 
     public void onDestroy() {
-		mixpanel.flush();
+      mixpanel.flush();
     }
 
     public void onNewIntent(Intent intent) {
